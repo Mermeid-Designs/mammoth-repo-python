@@ -30,11 +30,18 @@ Defines the functions to report version information.
 - Created by First Last (TODO: substitute placeholders with your information)
 - Maintained by First Last (TODO: substitute placeholders with person's information, or delete)
 """
+import sys
 
-__all__ = 'VERSION', 'version_info'
+if sys.version_info < (3, 10):
+    # Compatibility for python <3.10
+    import importlib_metadata as metadata
+else:
+    from importlib import metadata
 
-## The version of this library.
-VERSION = '0.0.0'  # TODO: update the version number
+project_name = 'mammoth-repo-template'  # TODO: substitute placeholder with project/repo name
+VERSION = metadata.version(package_name)
+
+__all__ = ['VERSION', 'version_info']
 
 
 def version_short() -> str:
@@ -68,15 +75,10 @@ def version_info() -> str:
     import platform
     import sys
     from pathlib import Path
-
-    if sys.version_info >= (3, 8):  # noqa: UP036
-        import importlib.metadata as importlib_metadata
-    else:
-        import importlib_metadata
-    # get data about packages that are closely related to this library, use this library or often conflict with this library
+    # Get data about packages that are closely related to this library, use this library or often conflict with this library
     package_names = {}  # TODO: add relevant package names
-    related_packages = []
-    for dist in importlib_metadata.distributions():
+    related_packages: list[str] = []
+    for dist in metadata.distributions():
         name = dist.metadata['Name']
         if name in package_names:
             related_packages.append(f'{name}-{dist.version}')
