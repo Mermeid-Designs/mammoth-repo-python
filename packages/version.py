@@ -11,13 +11,13 @@ Defines the functions to report version information.
 - parse_mypy_version
 
 @section libraries_version Libraries/Modules
-- [`importlib.metadata`](https://docs.python.org/3/library/importlib.metadata.html) standard library 
+- [`importlib.metadata`](https://docs.python.org/3/library/importlib.metadata.html) standard library
   - Access to `distributions` function
-- [`pathlib`](https://docs.python.org/3/library/pathlib.html) standard library 
+- [`pathlib`](https://docs.python.org/3/library/pathlib.html) standard library
   - Access to `Path(...).resolve` function
-- [`platform`](https://docs.python.org/3/library/platform.html) standard library 
+- [`platform`](https://docs.python.org/3/library/platform.html) standard library
   - Access to `platform` function
-- [`sys`](https://docs.python.org/3/library/sys.html) standard library 
+- [`sys`](https://docs.python.org/3/library/sys.html) standard library
   - Access to `version_info` function.
 
 @section notes_version Notes
@@ -30,16 +30,13 @@ Defines the functions to report version information.
 - Created by First Last (TODO: substitute placeholders with your information)
 - Maintained by First Last (TODO: substitute placeholders with person's information, or delete)
 """
-import sys
 
-if sys.version_info < (3, 10):
-    # Compatibility for python <3.10
-    import importlib_metadata as metadata
-else:
-    from importlib import metadata
+from importlib import metadata
 
-project_name = 'mammoth-repo-template'  # TODO: substitute placeholder with project/repo name
-VERSION = metadata.version(package_name)
+project_name = (
+    'mammoth-repo-template'  # TODO: substitute placeholder with project/repo name
+)
+VERSION = metadata.version(project_name)
 
 __all__ = ['VERSION', 'version_info']
 
@@ -75,6 +72,7 @@ def version_info() -> str:
     import platform
     import sys
     from pathlib import Path
+
     # Get data about packages that are closely related to this library, use this library or often conflict with this library
     package_names = {}  # TODO: add relevant package names
     related_packages: list[str] = []
